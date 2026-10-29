@@ -1,0 +1,8 @@
+{
+  "seed": 7,
+  "duration_ticks": 3600,
+  "protocol": {
+    "conflict_policy": "evidence",
+    "min_release_support": 2
+  }
+}

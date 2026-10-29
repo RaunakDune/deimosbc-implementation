@@ -1,0 +1,7 @@
+{
+  "seed": 7,
+  "duration_ticks": 3600,
+  "roadnet": "data/ProteusData/university_map_gen.csv",
+  "roadnet_snap_m": 1.0,
+  "flood_radius_m": [120, 200]
+}

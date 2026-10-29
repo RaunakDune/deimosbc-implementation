@@ -1,0 +1,7 @@
+{
+  "seed": 11,
+  "duration_ticks": 1800,
+  "n_processors": 7,
+  "byzantine": {"1": "tamper", "4": "forge"},
+  "crashes": [[2, 600, 1200]]
+}

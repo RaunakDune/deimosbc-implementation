@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deimosbc"
+version = "0.1.0"
+description = "Reference implementation of DEIMOSBC: a blockchain-based system for crowdsensing after natural disasters (BRAINS 2021)."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Raunak Sarbajna" }]
+keywords = ["blockchain", "crowdsensing", "disaster management", "map building", "IoT"]
+dependencies = ["cryptography>=41"]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+deimosbc = "deimosbc.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["deimosbc*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

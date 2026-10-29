@@ -1,0 +1,10 @@
+{
+  "seed": 7,
+  "duration_ticks": 3600,
+  "n_collectors": 40,
+  "n_processors": 5,
+  "frac_fabricate": 0.10,
+  "frac_garbage": 0.05,
+  "frac_faulty": 0.05,
+  "protocol": {}
+}

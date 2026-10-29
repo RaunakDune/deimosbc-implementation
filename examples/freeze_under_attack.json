@@ -1,0 +1,7 @@
+{
+  "seed": 3,
+  "duration_ticks": 2400,
+  "frac_garbage": 0.5,
+  "frac_fabricate": 0.0,
+  "protocol": {"freeze_error_rate": 0.4, "integrity_min_samples": 15, "integrity_window": 30}
+}
