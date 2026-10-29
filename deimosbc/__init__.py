@@ -3,7 +3,7 @@
 Reference implementation of Sarbajna, Eick & Laszka, BRAINS 2021
 (https://ieeexplore.ieee.org/document/9569794).
 
-Package layout (paper section in brackets):
+Package layout (section of our 2021 publication in brackets):
 
 * :mod:`deimosbc.ledger`     - blocks, transactions, the permissioned chain and
                                majority-attestation consensus [IV-A, IV-C]

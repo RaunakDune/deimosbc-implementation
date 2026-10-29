@@ -53,7 +53,7 @@ A merger runs inside block execution on every processor, so it must:
 * **be deterministic**: iterate in sorted order, no unseeded randomness, no
   wall-clock time, no dependence on hash-set order. `PYTHONHASHSEED` changes
   must not change the result. The existing merger is tested for this.
-* **support withdrawal**: the paper's conflict rule removes already-accepted
+* **support withdrawal**: our DEIMOSBC conflict rule removes already-accepted
   traces. Recording per-edge trace support (`Edge.support`) and calling
   `MapGraph.remove_trace` handles this. If Proteus moves vertices (for
   example by averaging positions), it needs either per-trace contributions
@@ -66,7 +66,7 @@ A merger runs inside block execution on every processor, so it must:
 ## 2. Prior maps
 
 Proteus uses information from prior maps. In DEIMOSBC the natural place for
-this is genesis. Its content is agreed before the disaster, which the paper
+this is genesis. Its content is agreed before the disaster, which our DEIMOSBC work
 treats as the only trustworthy point in time. A suggested extension:
 
 * add `prior_map_root` (hash) to the genesis dictionary, and distribute the
@@ -119,8 +119,8 @@ workflow (`aov(recall ~ jitter_m * frac_fabricate, data = …)`).
    measure, against the same adversaries and noise, the change in recall,
    precision and contamination, and the cost per block.
 2. **Conflict semantics.** Proteus' angle and distance constraints give a
-   principled definition of when two paths *disagree*, which the 2021 paper
-   left open. Wire them into `find_conflicts`.
+   principled definition of when two paths *disagree*, which our 2021 DEIMOSBC
+   work left open. Wire them into `find_conflicts`.
 3. **Trust-weighted merging.** DEIMOSBC knows *who* supports each edge, and
    how reliable each collector has been (accepted / rejected / disputed
    history on-chain). Proteus can weight paths by contributor reliability,

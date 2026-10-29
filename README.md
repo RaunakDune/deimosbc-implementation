@@ -1,6 +1,6 @@
 # DEIMOSBC: reference implementation
 
-A complete, runnable implementation of
+A complete, runnable implementation of our work
 
 > **DEIMOSBC: A Blockchain-based System for Crowdsensing after Natural Disasters**
 > Raunak Sarbajna, Christoph F. Eick, Aron Laszka. *3rd Conference on Blockchain
@@ -13,12 +13,12 @@ smart contracts that chain them into a pedestrian map of what is still
 passable. The resulting map lives on a permissioned blockchain, and anyone
 can request it and verify it. No central authority is needed at any point.
 
-THis is an attempt converting the architecture from the 2021 paper into
+This is an attempt at converting the architecture from our 2021 work into
 working software:
 
 * a permissioned **blockchain** with Ed25519 identities, majority-attested
   blocks, deterministic replicated state, and a chain audit tool;
-* the paper's **smart contracts**: registration, task assignment, trace
+* our **smart contracts**: registration, task assignment, trace
   upload with deposits and rewards, map release, and the *Retirement* freeze;
 * the **Trace Management System**: displacement-based sampling and
   trajectory segmentation;
@@ -26,7 +26,7 @@ working software:
   chaining, and conflict detection;
 * **Data Collector**, **Data Processor** and **Requester** nodes talking over
   a simulated ad-hoc radio network with delay-tolerant relaying;
-* the paper's **Gulf Coast hurricane scenario** as a reproducible simulation,
+* our **Gulf Coast hurricane scenario** as a reproducible simulation,
   with honest, malicious and faulty volunteers, Byzantine and crashing
   processors, ground-truth metrics, GeoJSON export and parameter sweeps.
 
@@ -35,7 +35,7 @@ working software:
 *One hour after landfall, 40 volunteers and 5 processors, default settings.
 Grey: open streets. Red: flooded or blocked streets. Blue: the released map.
 Orange ×: hazard reports. The blue lines on red streets are traces
-fabricated by the four malicious volunteers in this run. Under the paper's
+fabricated by the four malicious volunteers in this run. Under our original
 conflict rule, a street is only protected from fabrication if an honest
 volunteer has reported it as blocked. See [research notes](docs/RESEARCH_NOTES.md).*
 
@@ -72,9 +72,9 @@ deimosbc params                                           # all protocol paramet
 deimosbc sweep --grid jitter_m=4,8,12 --grid frac_fabricate=0,0.1 --seeds 3 --out sweep.csv
 ```
 
-## How the paper maps to the code
+## How our design maps to the code
 
-| Paper | Code |
+| Design element (section) | Code |
 |---|---|
 | Data Collector (IV-A.1): broadcast, wait for confirmation, queue, alerts, re-authentication | [`nodes/collector.py`](deimosbc/nodes/collector.py) |
 | Data Processor (IV-A.2): package verification, author identification, trace processing, result provisioning | [`nodes/processor.py`](deimosbc/nodes/processor.py), [`packets.py`](deimosbc/packets.py) |
@@ -88,9 +88,9 @@ deimosbc sweep --grid jitter_m=4,8,12 --grid frac_fabricate=0,0.1 --seeds 3 --ou
 | Hurricane scenario (II) | [`sim/`](deimosbc/sim) |
 
 [`docs/DESIGN.md`](docs/DESIGN.md) has the full mapping, the protocol
-details, the paper's sequence diagram traced arrow by arrow, and every
-**interpretation decision** this implementation made where the paper leaves
-the choice open. For example, the paper never defines what makes two traces
+details, our sequence diagram traced arrow by arrow, and every
+**interpretation decision** this implementation made where our 2021 description
+left the choice open. For example, we never defined what makes two traces
 "conflict", so the implementation has to.
 
 ## Results snapshot
@@ -103,7 +103,7 @@ upload garbage, 5 % have broken GPS), 5 processors, 1 hour. Mean of 3 seeds
 | Configuration | Recall | Precision | Contamination ↓ |
 |---|---|---|---|
 | Reference: same scenario without fabricators (seeds 7, 8) | 0.34 | 0.91 | 0.01 |
-| **Paper design** (default) | 0.35 | 0.85 | 0.19 |
+| **Original 2021 design** (default) | 0.35 | 0.85 | 0.19 |
 | + `conflict_policy=evidence` | 0.35 | 0.85 | 0.16 |
 | + `min_release_support=2` | 0.15 | 0.99 | 0.01 |
 | + both | 0.15 | 0.99 | 0.003 |
@@ -117,11 +117,11 @@ tampers with blocks, one forges traces) and a third crashes for 10 minutes.
 Every consensus round still commits a block, all honest replicas end with
 the same state root, and requesters verify every map they are served.
 
-The default row is the 2021 design as written. *Contamination* is the share
+The default row is our 2021 design as published. *Contamination* is the share
 of blocked street length that the released map shows as passable. That is
 the error that sends a rescue team into a flooded street.
 [`docs/RESEARCH_NOTES.md`](docs/RESEARCH_NOTES.md) discusses these numbers
-and other findings from implementing the paper.
+and other findings from implementing our design.
 
 ## Repository layout
 
@@ -168,3 +168,7 @@ tests/       unit, contract, ledger and end-to-end tests
   doi       = {10.1109/BRAINS52497.2021.9569794}
 }
 ```
+
+## License
+
+Released under the [MIT License](LICENSE).

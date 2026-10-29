@@ -1,8 +1,8 @@
-# Research notes: what implementing the 2021 paper revealed
+# Research notes: what implementing our 2021 design revealed
 
-Building DEIMOSBC end to end forced every open question in the paper to get
+Building DEIMOSBC end to end forced every open question in our original design to get
 an answer (see `DESIGN.md` §8). Running it surfaced the behaviours below. They
-are starting points for an improved version of the paper and for the
+are starting points for an improved version of our work and for the
 connection to Proteus (`PROTEUS_INTEGRATION.md`).
 
 All numbers come from the default scenario unless stated otherwise: a 2 km
@@ -20,19 +20,19 @@ deimosbc sweep --grid frac_fabricate=0.0,0.1 --grid jitter_m=4,12 --seeds 2 --ou
 |---|---|---|---|---|
 | no fabricators, jitter 4 m | 0.34 | 0.91 | 0.01 | 5 |
 | no fabricators, jitter 12 m | 0.32 | 0.80 | 0.02 | 38 |
-| paper design (10 % fabricators, jitter 4 m) | 0.35 | 0.85 | 0.19 | 55 |
-| paper design, jitter 12 m | 0.32 | 0.74 | 0.30 | 122 |
+| original design (10 % fabricators, jitter 4 m) | 0.35 | 0.85 | 0.19 | 55 |
+| original design, jitter 12 m | 0.32 | 0.74 | 0.30 | 122 |
 | evidence policy | 0.35 | 0.85 | 0.16 | 33 |
 | corroboration (≥ 2 collectors per edge) | 0.15 | 0.99 | 0.01 | 55 |
 | evidence + corroboration | 0.15 | 0.99 | 0.003 | 33 |
 
-Contamination varies a lot between seeds: it is 0.04–0.40 under the paper
+Contamination varies a lot between seeds: it is 0.04–0.40 under the original
 design, depending on whether the fabricators' task cells overlap a flood
 zone. Run more seeds before drawing fine-grained conclusions.
 
 ## 1. Single-source acceptance is the main safety gap
 
-The paper accepts any well-formed trace that does not conflict with an
+Our original design accepts any well-formed trace that does not conflict with an
 existing one. A fabricated "this flooded street is passable" trace is
 therefore accepted whenever no honest volunteer has reported that street as
 blocked. With 10 % fabricators, contamination (blocked street length shown
@@ -53,7 +53,7 @@ point. Options to explore:
 
 ## 2. "Discard both" erases the evidence it needs
 
-When a hazard report conflicts with a traversal, the paper discards both.
+When a hazard report conflicts with a traversal, our original design discards both.
 Two consequences follow:
 
 * the hazard report disappears, so the next fabricated trace on the same
@@ -100,14 +100,14 @@ would be an easy experiment.
 Safety holds with any honest majority, and a Byzantine minority cannot stall
 the chain (tested with block tampering and trace forgery). If a *majority*
 of processors is offline, no block can be finalised and uploads queue up. The
-paper's decentralisation goal argues for many cheap processors. That raises
-the authority-set question: the paper says processors "register", but adding
+our decentralisation goal argues for many cheap processors. That raises
+the authority-set question: our design says processors "register", but adding
 an authority after genesis needs its own governance protocol.
 
-## 7. Other gaps worth a paragraph in a follow-up paper
+## 7. Other gaps worth a paragraph in our follow-up work
 
 * **Privacy.** Traces reveal volunteers' movements on a ledger that every
-  processor replicates. The paper lists confidentiality as future work.
+  processor replicates. We listed confidentiality as future work.
   Options include coarsening, delayed publication, or committing only to
   edges.
 * **Requester trust anchor.** Requesters can verify a map only if they know

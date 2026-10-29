@@ -121,7 +121,7 @@ def _resolve(state: WorldState, rep, tid: str, collector: str):
     """
     existing = set(rep.all())
     if state.params.conflict_policy != "evidence" or rep.geometric or (rep.hazard and rep.traversal):
-        return existing, True                       # paper: "both traces are discarded"
+        return existing, True                       # original rule: "both traces are discarded"
 
     def who(t: str) -> str:
         return collector if t == tid else state.traces[t].collector

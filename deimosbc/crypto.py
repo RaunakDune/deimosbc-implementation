@@ -1,6 +1,6 @@
 """Ed25519 identities.
 
-The paper's *Register* step assigns "a pair of cryptographic keys" to every
+Our *Register* step assigns "a pair of cryptographic keys" to every
 participant. A node's on-chain identity is the hex encoding of its raw public
 key.
 """

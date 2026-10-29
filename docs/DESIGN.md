@@ -1,19 +1,19 @@
 # DEIMOSBC design notes
 
-This document maps every element of the BRAINS 2021 paper to the code, explains
+This document maps every element of our BRAINS 2021 work to the code, explains
 the protocol in enough detail to reason about it, and lists the places where
-the paper left a decision open and this implementation had to choose.
+our 2021 description left a decision open and this implementation had to choose.
 
 > Sarbajna, R., Eick, C. F., & Laszka, A. (2021). *DEIMOSBC: A Blockchain-based
 > System for Crowdsensing after Natural Disasters.* 3rd Conference on Blockchain
 > Research & Applications for Innovative Networks and Services (BRAINS).
 > [IEEE Xplore 9569794](https://ieeexplore.ieee.org/document/9569794)
 
-![Architecture (Fig. 1 of the paper)](figures/architecture.png)
+![Architecture (Fig. 1 of our 2021 publication)](figures/architecture.png)
 
-## 1. Paper → code map
+## 1. Design → code map
 
-| Paper | Where | Notes |
+| Design element (section) | Where | Notes |
 |---|---|---|
 | III-A.1 Disruption to communication networks | `network.py` | No cellular. Device-to-device radio only, range-limited, lossy. |
 | III-A.3 Availability of communication devices (Bluetooth / WiFi) | `network.RadioNetwork` | `collector_range_m` (default 120 m) models WiFi Direct. |
@@ -48,7 +48,7 @@ the paper left a decision open and this implementation had to choose.
 * **Identities.** Ed25519 keys (`crypto.py`). A node's on-chain identity is its
   hex public key.
 * **Genesis** (`replica.make_genesis`) fixes the protocol parameters, the
-  authority set (Data Processors) and the pre-verified volunteers. The paper
+  authority set (Data Processors) and the pre-verified volunteers. Our design
   assumes no trustworthy authority survives the disaster, so the only trusted
   set is the one that "existed since before the disaster".
 * **Transactions** are always submitted by a processor. Anything a collector
@@ -72,12 +72,12 @@ the paper left a decision open and this implementation had to choose.
 * **Audit.** `deimosbc verify chain.jsonl` replays an exported chain from
   genesis and re-checks every link, signature, quorum and state transition.
 
-Why not proof of work? The paper's processors are pre-verified and a
+Why not proof of work? Our processors are pre-verified and a
 post-disaster site has neither the energy nor the hardware for mining. A
-permissioned majority-attestation chain matches the paper's "majority vote"
-language for retirement, and its own future-work note on energy efficiency.
+permissioned majority-attestation chain matches our "majority vote"
+language for retirement, and our own future-work note on energy efficiency.
 
-## 3. Message flow (paper's sequence diagram)
+## 3. Message flow (our sequence diagram)
 
 ![Sequence diagram](figures/sequence.png)
 
@@ -124,7 +124,7 @@ a short path between them, the trace adds support to that path instead of
 creating a shortcut. Every edge records which traces (and so which
 collectors) support it.
 
-*Conflict.* The paper says only "in case of conflict, both traces are
+*Conflict.* Our 2021 description says only "in case of conflict, both traces are
 discarded". Two concrete conflicts are implemented:
 
 1. **Geometric.** The trace runs inside the corridor of existing edges for at
@@ -150,14 +150,14 @@ error.
 * Each rejection or conflict is an error. After `max_errors_before_reauth`
   (3) errors the collector is suspended and must be re-authenticated by a
   processor. After `max_reauths` (2) re-authentications, the next suspension
-  disables it permanently. This is the paper's "Trace Management system …
+  disables it permanently. This is our "Trace Management system …
   disables the data collector".
 
 ## 7. Governance
 
 * **Release.** A processor votes to release version *n+1* when the map has
   changed since the last release and either (a) nothing new arrived for
-  `release_quiet_blocks`, matching the paper's "satisfied that no more updates
+  `release_quiet_blocks`, matching our "satisfied that no more updates
   are required", (b) `release_interval_blocks` have passed, so requesters get
   periodic snapshots, or (c) every task is mapped. A strict majority
   releases. The released snapshot and its hash are stored, and the next
@@ -172,9 +172,9 @@ error.
 
 ## 8. Interpretation decisions
 
-Where the paper is silent or ambiguous, this implementation chooses:
+Where our 2021 description is silent or ambiguous, this implementation chooses:
 
-| Topic | Paper | Choice here |
+| Topic | 2021 design | Choice here |
 |---|---|---|
 | Consensus | "majority vote", "miners validate" | Permissioned majority attestation, round-robin proposer, deferred execution |
 | Processor registration | "processors will need to register" | In genesis. Adding processors later would need an authority-set change protocol (future work) |
@@ -188,13 +188,13 @@ Where the paper is silent or ambiguous, this implementation chooses:
 | Trajectory segmentation | cites Blanke et al. 2014 | Split on abrupt heading change, GPS gap or maximum length, 3-point smoothing |
 | Sensor data | "any additional sensor data" | Arbitrary integer milli-unit fields per point, averaged per vertex |
 
-## 9. Extensions beyond the paper (opt-in)
+## 9. Extensions beyond the 2021 design (opt-in)
 
 Both are off by default, so the default run *is* the 2021 design.
 
 * `conflict_policy = "evidence"`. Hazard conflicts are settled by counting
-  distinct collectors on each side, and a tie keeps the hazard. Under the
-  paper's rule a single honest hazard report and a single fabricated
+  distinct collectors on each side, and a tie keeps the hazard. Under our
+  original rule a single honest hazard report and a single fabricated
   traversal cancel out, and the hazard is lost. A fabricator can then
   re-inject the street.
 * `min_release_support = k`. Released maps include only edges traversed by

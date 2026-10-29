@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Reference implementation of DEIMOSBC: a blockchain-based system for crowdsensing after natural disasters (BRAINS 2021)."
 readme = "README.md"
 requires-python = ">=3.10"
+license = { text = "MIT" }
 authors = [{ name = "Raunak Sarbajna" }]
 keywords = ["blockchain", "crowdsensing", "disaster management", "map building", "IoT"]
 dependencies = ["cryptography>=41"]

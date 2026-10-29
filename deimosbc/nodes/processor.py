@@ -1,6 +1,6 @@
 """Data Processor (Sec. IV-A.2).
 
-Responsibilities, as listed in the paper:
+Responsibilities, as defined in our design:
 
 1. *Package Verification* - integrity of incoming data packets.
 2. *Author Identification* - the packet comes from a registered collector;

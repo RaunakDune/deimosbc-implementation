@@ -4,7 +4,7 @@ Everything in :class:`ProtocolParams` is written into the genesis block, so all
 processors execute the smart contracts with identical rules. Simulation-only
 knobs live in :mod:`deimosbc.sim.scenario`.
 
-Where the paper leaves a value open, the default chosen here is documented in
+Where our 2021 description leaves a value open, the default chosen here is documented in
 ``docs/DESIGN.md`` under "Interpretation decisions".
 """
 
@@ -44,14 +44,14 @@ class ProtocolParams:
     conflict_min_run_m: float = 40.0       # co-located misaligned run length => conflict
     hazard_radius_m: float = 15.0          # hazard report vs. traversed path conflict
 
-    # --- Extensions beyond the 2021 paper (defaults = paper behaviour) -----
-    # "discard_both": paper rule, every conflicting trace is discarded.
+    # --- Extensions beyond the 2021 design (defaults = original behaviour) -----
+    # "discard_both": original rule, every conflicting trace is discarded.
     # "evidence":     hazard conflicts are settled by the number of distinct
     #                 collectors on each side; ties keep the hazard (safety
     #                 first). Geometric conflicts still discard both.
     conflict_policy: str = "discard_both"
     # Released maps only contain edges traversed by at least this many
-    # distinct collectors (1 = paper behaviour, no corroboration).
+    # distinct collectors (1 = original behaviour, no corroboration).
     min_release_support: int = 1
 
     # --- Incentives (Sec. IV-C, "Upload Sensory Data") ---------------------
