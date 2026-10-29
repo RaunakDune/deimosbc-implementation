@@ -13,7 +13,7 @@ smart contracts that chain them into a pedestrian map of what is still
 passable. The resulting map lives on a permissioned blockchain, and anyone
 can request it and verify it. No central authority is needed at any point.
 
-The 2021 paper describes the architecture. This repository turns it into
+THis is an attempt converting the architecture from the 2021 paper into
 working software:
 
 * a permissioned **blockchain** with Ed25519 identities, majority-attested
